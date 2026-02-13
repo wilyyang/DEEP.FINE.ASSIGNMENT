@@ -21,3 +21,11 @@ dependencyResolutionManagement {
 
 rootProject.name = "DeepfineAssignment"
 include(":app")
+include(":core:common")
+include(":core:feature")
+include(":domain:entity")
+include(":domain:repository")
+include(":domain:usecase")
+include(":data")
+include(":di")
+include(":feature:auth")
