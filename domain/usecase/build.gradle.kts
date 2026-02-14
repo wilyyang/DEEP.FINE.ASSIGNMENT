@@ -31,4 +31,5 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":domain:entity"))
     implementation(project(":domain:repository"))
+    implementation(project(":di"))
 }
