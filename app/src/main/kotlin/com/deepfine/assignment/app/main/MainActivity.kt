@@ -4,16 +4,17 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Scaffold
-import androidx.compose.ui.Modifier
+import com.deepfine.assignment.app.navigation.AppScreenConfiguration
+import com.deepfine.assignment.core.feature.compose.theme.DeepfineTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
         setContent {
-            Scaffold(modifier = Modifier.fillMaxSize()) { _ ->
+            DeepfineTheme {
+                AppScreenConfiguration()
             }
         }
     }
