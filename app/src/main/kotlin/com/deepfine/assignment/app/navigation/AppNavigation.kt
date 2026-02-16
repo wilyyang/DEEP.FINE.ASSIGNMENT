@@ -8,7 +8,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.deepfine.assignment.app.navigation.NavigateAnimation.leftScreenTransition
 import com.deepfine.assignment.app.navigation.destination.LoginScreenDestination
+import com.deepfine.assignment.app.navigation.destination.SignupScreenDestination
+import com.deepfine.assignment.core.common.app.ArgName
 import com.deepfine.assignment.feature.auth.login.LoginContract
+import com.deepfine.assignment.feature.auth.signup.SignupContract
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -32,6 +35,14 @@ fun AppNavigation() {
             route = LoginContract.NAME
         ) {
             LoginScreenDestination(navController = navController)
+        }
+
+        leftScreenTransition(
+            route = "${SignupContract.NAME}/{${ArgName.NAME_USER_EMAIL}}",
+            arguments = listOf(NavArgument.argUserEmail)
+
+        ) {
+            SignupScreenDestination(navController = navController)
         }
     }
 }

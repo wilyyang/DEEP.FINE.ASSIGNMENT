@@ -13,9 +13,13 @@ class LoginContract {
         val isInitSuccess: Boolean = false
     ) : ViewState
 
-    sealed class Event : ViewEvent
+    sealed class Event : ViewEvent {
+        data object OnClickSignup : Event()
+    }
 
     sealed class Effect : ViewSideEffect {
-        sealed class Navigation : Effect()
+        sealed class Navigation : Effect() {
+            data class NavigateSignupScreen(val email: String) : Navigation()
+        }
     }
 }

@@ -6,19 +6,18 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.deepfine.assignment.app.navigation.HandleCommonEffect
 import com.deepfine.assignment.core.feature.viewmodel.CommonEvent
-import com.deepfine.assignment.feature.auth.login.LoginViewModel
-import com.deepfine.assignment.feature.auth.login.LoginContract
-import com.deepfine.assignment.feature.auth.login.composable.LoginScreenFrame
 import com.deepfine.assignment.feature.auth.signup.SignupContract
+import com.deepfine.assignment.feature.auth.signup.SignupViewModel
+import com.deepfine.assignment.feature.auth.signup.composable.SignupScreenFrame
 
 @Composable
-fun LoginScreenDestination(
+fun SignupScreenDestination(
     navController: NavController
 ) {
-    val viewModel: LoginViewModel = hiltViewModel()
+    val viewModel: SignupViewModel = hiltViewModel()
 
     val onEventSent = remember {
-        { event: LoginContract.Event ->
+        { event: SignupContract.Event ->
             viewModel.setEvent(event)
         }
     }
@@ -29,7 +28,7 @@ fun LoginScreenDestination(
         }
     }
 
-    val onEffectRequested: (LoginContract.Effect) -> Unit = remember {
+    val onEffectRequested: (SignupContract.Effect) -> Unit = remember {
         { effect ->
             handleEffectRequest(effect, navController)
         }
@@ -41,7 +40,7 @@ fun LoginScreenDestination(
         onCommonEventSent = onCommonEventSent
     )
 
-    LoginScreenFrame(
+    SignupScreenFrame(
         uiState = viewModel.uiState.value,
         overlayState = viewModel.overlayState.value,
         onEventSent = onEventSent,
@@ -51,10 +50,6 @@ fun LoginScreenDestination(
     )
 }
 
-fun handleEffectRequest(effect: LoginContract.Effect, navController: NavController) {
-    when (effect) {
-        is LoginContract.Effect.Navigation.NavigateSignupScreen -> {
-            navController.navigate("${SignupContract.NAME}/${effect.email}")
-        }
-    }
+fun handleEffectRequest(effect: SignupContract.Effect, navController: NavController) {
+    // TODO
 }
