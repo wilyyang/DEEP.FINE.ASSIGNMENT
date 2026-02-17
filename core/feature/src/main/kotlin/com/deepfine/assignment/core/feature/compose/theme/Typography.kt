@@ -18,102 +18,51 @@ private val sdGothicNeo = FontFamily(
 )
 
 val baseTypography = Typography(
-    // Display
-    displayLarge = TextStyle(
-        lineHeight = 26.8.sp,
-        fontSize = 24.4.sp,
-        fontFamily = sdGothicNeo,
-        fontWeight = FontWeight.Bold
-    ),
-    displayMedium = TextStyle(
-        lineHeight = 24.1.sp,
-        fontSize = 21.9.sp,
-        fontFamily = sdGothicNeo,
-        fontWeight = FontWeight.Bold
-    ),
-    displaySmall = TextStyle(
-        lineHeight = 22.9.sp,
-        fontSize = 20.8.sp,
-        fontFamily = sdGothicNeo,
-        fontWeight = FontWeight.Bold
-    ),
-
-    // Headline
-    headlineLarge = TextStyle(
-        lineHeight = 23.3.sp,
-        fontSize = 21.2.sp,
-        fontFamily = sdGothicNeo,
-        fontWeight = FontWeight.Bold
-    ),
-    headlineMedium = TextStyle(
-        lineHeight = 21.0.sp,
-        fontSize = 19.1.sp,
-        fontFamily = sdGothicNeo,
-        fontWeight = FontWeight.Bold
-    ),
-    headlineSmall = TextStyle(
-        lineHeight = 22.8.sp,
-        fontSize = 20.8.sp,
-        fontFamily = sdGothicNeo,
-        fontWeight = FontWeight.Bold
-    ),
-
-    // Title
-    titleLarge = TextStyle(
-        lineHeight = 22.2.sp,
-        fontSize = 20.2.sp,
-        fontFamily = sdGothicNeo,
-        fontWeight = FontWeight.SemiBold
-    ),
+    // ex) 로그인 화면 상단 타이틀
     titleMedium = TextStyle(
-        lineHeight = 18.7.sp,
-        fontSize = 17.sp,
+        lineHeight = 36.sp,
+        fontSize = 30.sp,
         fontFamily = sdGothicNeo,
-        fontWeight = FontWeight.SemiBold
+        fontWeight = FontWeight.Bold
     ),
+    // ex) 회원가입 화면 상단 타이틀
     titleSmall = TextStyle(
-        lineHeight = 17.8.sp,
-        fontSize = 16.2.sp,
+        lineHeight = 29.sp,
+        fontSize = 24.sp,
         fontFamily = sdGothicNeo,
-        fontWeight = FontWeight.SemiBold
+        fontWeight = FontWeight.Bold
     ),
-
-    // Body
     bodyLarge = TextStyle(
+        lineHeight = 24.sp,
+        fontSize = 20.sp,
+        fontFamily = sdGothicNeo,
+        fontWeight = FontWeight.Normal
+    ),
+    // ex) 텍스트 입력, 버튼
+    bodyMedium = TextStyle(
+        lineHeight = 22.sp,
+        fontSize = 18.sp,
+        fontFamily = sdGothicNeo,
+        fontWeight = FontWeight.Normal
+    ),
+    // ex) 화면 상단 가이드글
+    bodySmall = TextStyle(
         lineHeight = 18.sp,
         fontSize = 15.sp,
         fontFamily = sdGothicNeo,
         fontWeight = FontWeight.Normal
     ),
-    bodyMedium = TextStyle(
-        lineHeight = 16.8.sp,
-        fontSize = 14.sp,
-        fontFamily = sdGothicNeo,
-        fontWeight = FontWeight.Normal
-    ),
-    bodySmall = TextStyle(
-        lineHeight = 15.6.sp,
-        fontSize = 13.sp,
-        fontFamily = sdGothicNeo,
-        fontWeight = FontWeight.Normal
-    ),
-
-    // Label
+    // ex) 텍스트 필드 상단 라벨
     labelLarge = TextStyle(
-        lineHeight = 15.6.sp,
+        lineHeight = 16.sp,
         fontSize = 13.sp,
         fontFamily = sdGothicNeo,
         fontWeight = FontWeight.Normal
     ),
+    // ex) 텍스트 필드 하단 안내
     labelMedium = TextStyle(
-        lineHeight = 13.sp,
-        fontSize = 10.8.sp,
-        fontFamily = sdGothicNeo,
-        fontWeight = FontWeight.Normal
-    ),
-    labelSmall = TextStyle(
-        lineHeight = 8.8.sp,
-        fontSize = 7.3.sp,
+        lineHeight = 14.sp,
+        fontSize = 12.sp,
         fontFamily = sdGothicNeo,
         fontWeight = FontWeight.Normal
     )
