@@ -1,9 +1,12 @@
 package com.deepfine.assignment.feature.auth.login
 
 import androidx.lifecycle.SavedStateHandle
+import com.deepfine.assignment.core.common.util.UiText
 import com.deepfine.assignment.core.feature.viewmodel.BaseViewModel
+import com.deepfine.assignment.core.feature.viewmodel.CommonEffect
 import com.deepfine.assignment.domain.usecase.auth.UseCaseIsEmailRegistered
 import com.deepfine.assignment.domain.usecase.auth.UseCaseLogin
+import com.deepfine.assignment.feature.auth.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -15,22 +18,113 @@ class LoginViewModel @Inject constructor(
 ) : BaseViewModel<LoginContract.State, LoginContract.Event, LoginContract.Effect>() {
 
     init {
-        launchWithInit {
-
-        }
+        launchWithInit { }
     }
 
     override fun setInitialState() = LoginContract.State()
 
     override fun handleEvents(event: LoginContract.Event) {
         when (event) {
-            LoginContract.Event.OnClickSignup -> handleOnClickSignup("테스트 이메일")
+            is LoginContract.Event.OnEmailChanged -> onEmailChanged(event.text)
+            is LoginContract.Event.OnEmailCursorChanged -> onEmailCursorChanged(event.hasCursor)
+            is LoginContract.Event.OnPasswordChanged -> onPasswordChanged(event.text)
+            LoginContract.Event.OnClickBottom -> onClickBottom()
         }
     }
 
-    private fun handleOnClickSignup(email: String) {
+    private fun onEmailCursorChanged(hasCursor: Boolean) {
+        setState {
+            copy(
+                emailTouched = emailTouched || hasCursor,
+                isEmailCursor = hasCursor
+            )
+        }
+    }
+
+    private fun onEmailChanged(text: String) {
+        val prev = uiState.value
+
+        val shouldReset =
+            prev.emailValidity is LoginContract.EmailValidity.Invalid ||
+                    prev.step != LoginContract.Step.Start ||
+                    prev.isEmailRegistered != null
+
+        setState {
+            if (shouldReset) {
+                copy(
+                    email = text,
+
+                    // 리셋
+                    step = LoginContract.Step.Start,
+                    password = "",
+                    emailValidity = LoginContract.EmailValidity.Unknown,
+                    isEmailRegistered = null
+                )
+            } else {
+                copy(email = text)
+            }
+        }
+    }
+
+    private fun onPasswordChanged(text: String) {
+        setState { copy(password = text) }
+    }
+
+    private fun onClickBottom() {
+        when (uiState.value.step) {
+            LoginContract.Step.Start -> handleStartBottom()
+            LoginContract.Step.LoginPassword -> handleLoginBottom()
+            LoginContract.Step.Signup -> handleSignupBottom()
+        }
+    }
+
+    private fun handleStartBottom() {
+        val email = uiState.value.email
+
+        if (!isValidEmailFormat(email)) {
+            setState { copy(emailValidity = LoginContract.EmailValidity.Invalid) }
+            return
+        }
+
+        launchWithLoading {
+            // valid -> DB 조회
+            val registered = useCaseIsEmailRegistered(email)
+            setState {
+                copy(
+                    step = if (registered) LoginContract.Step.LoginPassword else LoginContract.Step.Signup,
+                    emailValidity = LoginContract.EmailValidity.Valid,
+                    isEmailRegistered = registered
+                )
+            }
+        }
+    }
+
+    private fun handleLoginBottom() {
+        val state = uiState.value
+        launchWithLoading {
+            val userInfo = useCaseLogin(state.email, state.password)
+            setCommonEffect {
+                CommonEffect.ShowToast(
+                    message = UiText.StringResource(
+                        if (userInfo != null)
+                            R.string.login_toast_message_login_success
+                        else
+                            R.string.login_toast_message_login_fail
+                    )
+                )
+            }
+        }
+    }
+
+    private fun handleSignupBottom() {
+        val email = uiState.value.email
         setEffect {
             LoginContract.Effect.Navigation.NavigateSignupScreen(email = email)
         }
+    }
+
+    private fun isValidEmailFormat(email: String): Boolean {
+        val pattern = Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")
+        return pattern.matches(email)
     }
 }
