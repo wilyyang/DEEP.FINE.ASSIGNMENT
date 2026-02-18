@@ -45,15 +45,11 @@ class LoginContract {
         val email: String = "",
         val password: String = "",
 
-        val emailTouched: Boolean = false,
-        val isEmailCursor: Boolean = false,
-        val emailValidity: EmailValidity = EmailValidity.Unknown,
-        val isEmailRegistered: Boolean? = null,
+        val emailValidity: EmailValidity = EmailValidity.Unknown
     ) : ViewState
 
     sealed class Event : ViewEvent {
         data class OnEmailChanged(val text: String) : Event()
-        data class OnEmailCursorChanged(val hasCursor: Boolean) : Event()
         data class OnPasswordChanged(val text: String) : Event()
         data object OnClickBottom : Event()
     }

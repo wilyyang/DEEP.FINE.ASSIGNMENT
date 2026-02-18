@@ -26,28 +26,15 @@ class LoginViewModel @Inject constructor(
     override fun handleEvents(event: LoginContract.Event) {
         when (event) {
             is LoginContract.Event.OnEmailChanged -> onEmailChanged(event.text)
-            is LoginContract.Event.OnEmailCursorChanged -> onEmailCursorChanged(event.hasCursor)
             is LoginContract.Event.OnPasswordChanged -> onPasswordChanged(event.text)
             LoginContract.Event.OnClickBottom -> onClickBottom()
         }
     }
 
-    private fun onEmailCursorChanged(hasCursor: Boolean) {
-        setState {
-            copy(
-                emailTouched = emailTouched || hasCursor,
-                isEmailCursor = hasCursor
-            )
-        }
-    }
-
     private fun onEmailChanged(text: String) {
         val prev = uiState.value
-
         val shouldReset =
-            prev.emailValidity is LoginContract.EmailValidity.Invalid ||
-                    prev.step != LoginContract.Step.Start ||
-                    prev.isEmailRegistered != null
+            prev.emailValidity is LoginContract.EmailValidity.Invalid || prev.step != LoginContract.Step.Start
 
         setState {
             if (shouldReset) {
@@ -57,8 +44,7 @@ class LoginViewModel @Inject constructor(
                     // 리셋
                     step = LoginContract.Step.Start,
                     password = "",
-                    emailValidity = LoginContract.EmailValidity.Unknown,
-                    isEmailRegistered = null
+                    emailValidity = LoginContract.EmailValidity.Unknown
                 )
             } else {
                 copy(email = text)
@@ -92,8 +78,7 @@ class LoginViewModel @Inject constructor(
             setState {
                 copy(
                     step = if (registered) LoginContract.Step.LoginPassword else LoginContract.Step.Signup,
-                    emailValidity = LoginContract.EmailValidity.Valid,
-                    isEmailRegistered = registered
+                    emailValidity = LoginContract.EmailValidity.Valid
                 )
             }
         }

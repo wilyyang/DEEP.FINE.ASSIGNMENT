@@ -51,6 +51,7 @@ fun LoginScreenFrame(
     BaseScreen(
         overlayState = overlayState,
         statusBarColor = MaterialTheme.colorScheme.surface,
+        showDefaultLoadingIndicator = false,
         initContent = {
             LoginScreenSkeleton()
         }
@@ -58,6 +59,7 @@ fun LoginScreenFrame(
         LoginScreenContent(
             modifier = Modifier.fillMaxSize(),
             uiState = uiState,
+            overlayState = overlayState,
             onEventSent = onEventSent
         )
     }

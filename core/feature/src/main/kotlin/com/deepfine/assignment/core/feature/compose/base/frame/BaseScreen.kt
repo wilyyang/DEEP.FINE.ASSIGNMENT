@@ -35,6 +35,7 @@ fun BaseScreen(
     isStatusBarTextDark: Boolean = true,
 
     // overlay state
+    showDefaultLoadingIndicator: Boolean = true,
     overlayState: OverlayState,
     initContent: (@Composable () -> Unit)? = null,
 
@@ -104,6 +105,7 @@ fun BaseScreen(
 
     if (initShowState.value == InitShowState.None) {
         OverlayStateProcess(
+            showDefaultLoadingIndicator = showDefaultLoadingIndicator,
             state = overlayState
         )
     }
