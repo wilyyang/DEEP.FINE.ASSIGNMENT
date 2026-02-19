@@ -6,6 +6,7 @@ import com.deepfine.assignment.core.feature.viewmodel.BaseViewModel
 import com.deepfine.assignment.core.feature.viewmodel.CommonEffect
 import com.deepfine.assignment.domain.usecase.auth.UseCaseIsEmailRegistered
 import com.deepfine.assignment.domain.usecase.auth.UseCaseLogin
+import com.deepfine.assignment.domain.usecase.auth.validator.AuthValidator
 import com.deepfine.assignment.feature.auth.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -67,7 +68,7 @@ class LoginViewModel @Inject constructor(
     private fun handleStartBottom() {
         val email = uiState.value.email
 
-        if (!isValidEmailFormat(email)) {
+        if (!AuthValidator.isValidEmail(email)) {
             setState { copy(emailValidity = LoginContract.EmailValidity.Invalid) }
             return
         }
@@ -106,10 +107,5 @@ class LoginViewModel @Inject constructor(
         setEffect {
             LoginContract.Effect.Navigation.NavigateSignupScreen(email = email)
         }
-    }
-
-    private fun isValidEmailFormat(email: String): Boolean {
-        val pattern = Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")
-        return pattern.matches(email)
     }
 }

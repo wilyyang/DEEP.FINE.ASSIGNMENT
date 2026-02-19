@@ -6,6 +6,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.deepfine.assignment.app.navigation.HandleCommonEffect
 import com.deepfine.assignment.core.feature.viewmodel.CommonEvent
+import com.deepfine.assignment.feature.auth.login.LoginContract
 import com.deepfine.assignment.feature.auth.signup.SignupContract
 import com.deepfine.assignment.feature.auth.signup.SignupViewModel
 import com.deepfine.assignment.feature.auth.signup.composable.SignupScreenFrame
@@ -51,5 +52,13 @@ fun SignupScreenDestination(
 }
 
 fun handleEffectRequest(effect: SignupContract.Effect, navController: NavController) {
-    // TODO
+    when (effect) {
+        is SignupContract.Effect.Navigation.NavigateLoginScreen -> {
+            navController.navigate(LoginContract.NAME) {
+                popUpTo(navController.graph.id) {
+                    inclusive = true
+                }
+            }
+        }
+    }
 }

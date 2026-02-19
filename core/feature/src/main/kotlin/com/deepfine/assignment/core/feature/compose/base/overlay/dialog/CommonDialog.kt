@@ -71,7 +71,7 @@ fun CommonDialog(
                             .clip(shape = MaterialTheme.shapes.medium)
                             .border(
                                 0.5.dp,
-                                color = MaterialTheme.colorScheme.background,
+                                color = MaterialTheme.colorScheme.outline,
                                 shape = MaterialTheme.shapes.medium
                             )
                             .background(Color.White)
@@ -88,7 +88,7 @@ fun CommonDialog(
                                 Spacer(modifier = Modifier.height(10.dp))
                                 Text(
                                     text = title,
-                                    style = MaterialTheme.typography.titleMedium,
+                                    style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
                                     maxLines = 2,
                                     overflow = TextOverflow.Ellipsis
                                 )
@@ -108,7 +108,7 @@ fun CommonDialog(
                                     .padding(horizontal = 25.dp)
                                     .padding(vertical = 15.dp),
                                 text = message ?: "",
-                                style = MaterialTheme.typography.bodyMedium.copy(
+                                style = MaterialTheme.typography.bodySmall.copy(
                                     color = MaterialTheme.colorScheme.onSurface,
                                     lineHeight = 22.sp
                                 ),
@@ -140,7 +140,7 @@ fun CommonDialog(
                                             .align(Alignment.Center)
                                             .padding(20.dp),
                                         text = it.ifBlank { stringResource(id = R.string.button_cancel) },
-                                        style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold),
+                                        style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.SemiBold),
                                         color = MaterialTheme.colorScheme.onSurface
                                     )
                                 }
@@ -167,7 +167,7 @@ fun CommonDialog(
                                             .align(Alignment.Center)
                                             .padding(20.dp),
                                         text = confirmText.ifBlank { stringResource(id = R.string.button_confirm) },
-                                        style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
+                                        style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Bold),
                                         color = MaterialTheme.colorScheme.onSurface
                                     )
                                 }

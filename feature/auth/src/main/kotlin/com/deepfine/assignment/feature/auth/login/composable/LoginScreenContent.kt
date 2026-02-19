@@ -25,7 +25,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.deepfine.assignment.core.common.util.UiText
-import com.deepfine.assignment.core.feature.compose.theme.TopSection
+import com.deepfine.assignment.core.feature.compose.theme.AppbarSection
 import com.deepfine.assignment.core.feature.viewmodel.OverlayState
 import com.deepfine.assignment.feature.auth.R
 import com.deepfine.assignment.feature.auth.common.component.AuthActionButton
@@ -59,7 +59,7 @@ fun LoginScreenContent(
         Column(
             modifier = Modifier
                 .align(Alignment.Center)
-                .padding(top = TopSection.height, bottom = 54.dp)
+                .padding(top = AppbarSection.height, bottom = 54.dp)
                 .padding(horizontal = 24.dp)
                 .fillMaxWidth()
         ) {

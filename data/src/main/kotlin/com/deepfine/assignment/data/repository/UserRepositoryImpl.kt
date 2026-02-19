@@ -1,7 +1,5 @@
 package com.deepfine.assignment.data.repository
 
-import android.database.sqlite.SQLiteConstraintException
-import com.deepfine.assignment.core.common.error.DuplicateEmailException
 import com.deepfine.assignment.data.datasource.database.user.UserDatabaseDao
 import com.deepfine.assignment.data.datasource.database.user.model.UserInfoData
 import com.deepfine.assignment.data.datasource.database.user.model.asDomain
@@ -21,11 +19,6 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override suspend fun register(email: String, name: String, password: String) {
-        try {
-            userDatabaseDao.insert(UserInfoData(email = email, name = name, password = password))
-        } catch (t: Throwable) {
-            if (t is SQLiteConstraintException) throw DuplicateEmailException(email)
-            throw t
-        }
+        userDatabaseDao.insert(UserInfoData(email = email, name = name, password = password))
     }
 }
