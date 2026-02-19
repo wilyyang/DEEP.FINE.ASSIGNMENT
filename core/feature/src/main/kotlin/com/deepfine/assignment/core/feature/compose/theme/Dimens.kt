@@ -7,7 +7,7 @@ object AppbarSection {
 }
 
 object BottomSection {
-    val height = 104.dp // top 5.dp + button 54.dp + bottom 40.dp
+    val height = 99.dp // top 5.dp + button 54.dp + bottom 40.dp
     object Padding{
         val top = 5.dp
         val bottom = 40.dp
