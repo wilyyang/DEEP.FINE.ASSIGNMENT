@@ -32,4 +32,7 @@ dependencies {
     implementation(project(":domain:entity"))
     implementation(project(":domain:repository"))
     implementation(project(":di"))
+
+    /** test **/
+    testImplementation(libs.bundles.test.base)
 }

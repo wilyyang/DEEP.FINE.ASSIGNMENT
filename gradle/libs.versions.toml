@@ -19,6 +19,11 @@ navigation = "2.9.6"
 navigationHilt = "1.3.0"
 room = "2.8.4"
 
+# test library version
+testKotlinXCoroutine = "1.10.2"
+testRobolectric = "4.16"
+testTruth = "1.4.5"
+
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "agp" }
 com-android-library = { id = "com.android.library", version.ref = "agp" }
@@ -48,8 +53,13 @@ room = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "testKotlinXCoroutine" }
+robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "testRobolectric" }
+truth = { group = "com.google.truth", name = "truth", version.ref = "testTruth" }
+
 [bundles]
 compose = ["compose-ui", "compose-ui-tooling", "compose-ui-util", "compose-foundation", "compose-activity",]
 material = ["material3", "material3-window"]
 navigation = ["navigation", "navigationHilt"]
 room = ["room", "room-runtime"]
+test-base = ["kotlinx-coroutines-test", "robolectric", "truth"]
