@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.deepfine.assignment.core.feature.compose.theme.BottomSection
+import com.deepfine.assignment.core.feature.compose.theme.ContentSection
 import com.deepfine.assignment.feature.auth.R
 import com.deepfine.assignment.feature.auth.common.component.AuthActionButton
 import com.deepfine.assignment.feature.auth.common.component.AuthUnderlineTextField
@@ -28,23 +29,26 @@ fun LoginScreenSkeleton() {
         Column(
             modifier = Modifier
                 .weight(1f)
-                .padding(horizontal = 24.dp)
+                .padding(horizontal = ContentSection.Padding.horizontal)
         ) {
             Spacer(modifier = Modifier.height(116.dp))
 
             Text(
-                modifier = Modifier.padding(bottom = 10.dp),
                 text = stringResource(R.string.login_top_title_start_step),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
             )
 
+            Spacer(modifier = Modifier.height(10.dp))
+
             Text(
-                modifier = Modifier.padding(bottom = 10.dp).height(54.dp),
+                modifier = Modifier.height(54.dp),
                 text = stringResource(R.string.login_top_message_start_step),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.3f)
             )
+
+            Spacer(modifier = Modifier.height(10.dp))
 
             AuthUnderlineTextField(
                 enabled = false,

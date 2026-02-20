@@ -3,6 +3,7 @@ package com.deepfine.assignment.feature.auth.signup.composable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -15,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.deepfine.assignment.core.feature.compose.theme.AppbarSection
 import com.deepfine.assignment.core.feature.compose.theme.BottomSection
+import com.deepfine.assignment.core.feature.compose.theme.ContentSection
 import com.deepfine.assignment.feature.auth.R
 import com.deepfine.assignment.feature.auth.common.component.AuthActionButton
 import com.deepfine.assignment.feature.auth.common.component.AuthUnderlineTextField
@@ -38,27 +40,27 @@ fun SignupScreenSkeleton() {
         Column(
             modifier = Modifier
                 .weight(1f)
-                .padding(top = 36.dp)
-                .padding(horizontal = 24.dp)
+                .padding(horizontal = ContentSection.Padding.horizontal)
         ) {
+            Spacer(modifier = Modifier.height(36.dp))
+
             Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 12.dp),
+                modifier = Modifier.fillMaxWidth(),
                 text = stringResource(R.string.signup_top_title_name_step),
                 style = MaterialTheme.typography.titleSmall,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
             )
 
+            Spacer(modifier = Modifier.height(12.dp))
+
             Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 12.dp)
-                    .height(64.dp),
+                modifier = Modifier.fillMaxWidth().height(64.dp),
                 text = stringResource(R.string.signup_top_message_name_step),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
             )
+
+            Spacer(modifier = Modifier.height(12.dp))
 
             AuthUnderlineTextField(
                 modifier = Modifier.fillMaxWidth(),

@@ -23,7 +23,7 @@ class SignupViewModel @Inject constructor(
     private val email: String by lazy { requireNotNull(savedStateHandle.get<String>(NAME_USER_EMAIL)) }
 
     init {
-        launchWithInit { }
+        launchWithInit {  }
     }
 
     override fun setInitialState() = SignupContract.State()
@@ -58,6 +58,7 @@ class SignupViewModel @Inject constructor(
 
     private fun handlePasswordBottom() {
         val password = uiState.value.password
+
         if (!AuthValidator.isValidPassword(password)) {
             setCommonEffect {
                 CommonEffect.ShowToast(message = UiText.StringResource(R.string.signup_toast_message_invalid_password))

@@ -4,16 +4,17 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
@@ -25,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.deepfine.assignment.core.feature.compose.custom.modifier.customImePadding
 import com.deepfine.assignment.core.feature.compose.theme.AppbarSection
 import com.deepfine.assignment.core.feature.compose.theme.BottomSection
+import com.deepfine.assignment.core.feature.compose.theme.ContentSection
 import com.deepfine.assignment.core.feature.viewmodel.CommonEvent
 import com.deepfine.assignment.core.feature.viewmodel.OverlayState
 import com.deepfine.assignment.feature.auth.R
@@ -45,8 +47,9 @@ fun SignupScreenContent(
     val focusManager = LocalFocusManager.current
     val isLoading = overlayState is OverlayState.Loading
 
-    LaunchedEffect(isLoading) {
-        if (isLoading) focusManager.clearFocus()
+    val onClickBottom = {
+        focusManager.clearFocus()
+        onEventSent(SignupContract.Event.OnClickBottom)
     }
 
     Column(
@@ -64,74 +67,83 @@ fun SignupScreenContent(
             progressOrder = uiState.step.order,
             progressMax = 3,
             onBackButtonClick = {
+                focusManager.clearFocus()
                 onCommonEventSent(CommonEvent.CloseEvent)
             }
         )
 
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .weight(1f)
-                .padding(top = 36.dp)
-                .padding(horizontal = 24.dp)
+                .padding(horizontal = ContentSection.Padding.horizontal)
         ) {
-            if(uiState.step is SignupContract.Step.Complete){
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = stringResource(R.string.signup_top_title_complete_name, uiState.name),
-                    style = MaterialTheme.typography.titleSmall,
-                    color = MaterialTheme.colorScheme.primary
-                )
+            item {
+                Spacer(modifier = Modifier.height(36.dp))
             }
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 12.dp),
-                text = uiState.step.topTitle.asString(context),
-                style = MaterialTheme.typography.titleSmall
-            )
 
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 12.dp)
-                    .height(64.dp),
-                text = uiState.step.topMessage.asString(context),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
-            )
-
-            when (uiState.step) {
-                SignupContract.Step.Name -> {
-                    AuthUnderlineTextField(
-                        modifier = Modifier.fillMaxWidth(),
-                        label = stringResource(id = R.string.signup_text_field_name_label),
-                        hint = stringResource(id = R.string.signup_text_field_name_hint),
-                        value = uiState.name,
-                        onValueChange = { onEventSent(SignupContract.Event.OnNameChanged(it)) },
-                        keyboardActions = KeyboardActions(
-                            onDone = { onEventSent(SignupContract.Event.OnClickBottom) }
+            item {
+                Column {
+                    if(uiState.step is SignupContract.Step.Complete){
+                        Text(
+                            modifier = Modifier.fillMaxWidth(),
+                            text = stringResource(R.string.signup_top_title_complete_name, uiState.name),
+                            style = MaterialTheme.typography.titleSmall,
+                            color = MaterialTheme.colorScheme.primary
                         )
-                    )
-                }
-
-                SignupContract.Step.Password -> {
-                    AuthUnderlineTextField(
+                    }
+                    Text(
                         modifier = Modifier.fillMaxWidth(),
-                        label = stringResource(id = R.string.signup_text_field_password_label),
-                        hint = stringResource(id = R.string.signup_text_field_password_hint),
-                        value = uiState.password,
-                        onValueChange = { onEventSent(SignupContract.Event.OnPasswordChanged(it)) },
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Password,
-                            imeAction = ImeAction.Done
-                        ),
-                        keyboardActions = KeyboardActions(
-                            onDone = { onEventSent(SignupContract.Event.OnClickBottom) }
-                        )
+                        text = uiState.step.topTitle.asString(context),
+                        style = MaterialTheme.typography.titleSmall
                     )
-                }
 
-                else -> {}
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    Text(
+                        modifier = Modifier.fillMaxWidth().height(64.dp),
+                        text = uiState.step.topMessage.asString(context),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
+                    )
+
+                    Spacer(modifier = Modifier.height(12.dp))
+                }
+            }
+
+            item {
+                when (uiState.step) {
+                    SignupContract.Step.Name -> {
+                        AuthUnderlineTextField(
+                            modifier = Modifier.fillMaxWidth(),
+                            label = stringResource(id = R.string.signup_text_field_name_label),
+                            hint = stringResource(id = R.string.signup_text_field_name_hint),
+                            value = uiState.name,
+                            onValueChange = { onEventSent(SignupContract.Event.OnNameChanged(it)) },
+                            keyboardActions = KeyboardActions(
+                                onDone = { onClickBottom() }
+                            )
+                        )
+                    }
+
+                    SignupContract.Step.Password -> {
+                        AuthUnderlineTextField(
+                            modifier = Modifier.fillMaxWidth(),
+                            label = stringResource(id = R.string.signup_text_field_password_label),
+                            hint = stringResource(id = R.string.signup_text_field_password_hint),
+                            value = uiState.password,
+                            onValueChange = { onEventSent(SignupContract.Event.OnPasswordChanged(it)) },
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Password,
+                                imeAction = ImeAction.Done
+                            ),
+                            keyboardActions = KeyboardActions(
+                                onDone = { onClickBottom() }
+                            )
+                        )
+                    }
+
+                    else -> {}
+                }
             }
         }
 
@@ -157,7 +169,7 @@ fun SignupScreenContent(
                 modifier = Modifier.fillMaxSize(),
                 enabled = bottomEnabled,
                 loading = isLoading,
-                onClick = { onEventSent(SignupContract.Event.OnClickBottom) },
+                onClick = { onClickBottom() },
                 text = uiState.step.bottomButton.asString(context),
                 textStyle = MaterialTheme.typography.bodyMedium
             )

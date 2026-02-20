@@ -9,7 +9,6 @@ import com.deepfine.assignment.domain.usecase.auth.UseCaseLogin
 import com.deepfine.assignment.domain.usecase.auth.validator.AuthValidator
 import com.deepfine.assignment.feature.auth.R
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,7 +19,7 @@ class LoginViewModel @Inject constructor(
 ) : BaseViewModel<LoginContract.State, LoginContract.Event, LoginContract.Effect>() {
 
     init {
-        launchWithInit { delay(3000L)}
+        launchWithInit {  }
     }
 
     override fun setInitialState() = LoginContract.State()

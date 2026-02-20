@@ -15,7 +15,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
@@ -27,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.deepfine.assignment.core.common.util.UiText
 import com.deepfine.assignment.core.feature.compose.custom.modifier.customImePadding
 import com.deepfine.assignment.core.feature.compose.theme.BottomSection
+import com.deepfine.assignment.core.feature.compose.theme.ContentSection
 import com.deepfine.assignment.core.feature.viewmodel.OverlayState
 import com.deepfine.assignment.feature.auth.R
 import com.deepfine.assignment.feature.auth.common.component.AuthActionButton
@@ -45,8 +45,9 @@ fun LoginScreenContent(
     val focusManager = LocalFocusManager.current
     val isLoading = overlayState is OverlayState.Loading
 
-    LaunchedEffect(isLoading) {
-        if (isLoading) focusManager.clearFocus()
+    val onClickBottom = {
+        focusManager.clearFocus()
+        onEventSent(LoginContract.Event.OnClickBottom)
     }
 
     Column(
@@ -59,7 +60,7 @@ fun LoginScreenContent(
         LazyColumn(
             modifier = Modifier
                 .weight(1f)
-                .padding(horizontal = 24.dp)
+                .padding(horizontal = ContentSection.Padding.horizontal)
         ) {
             item {
                 Spacer(modifier = Modifier.height(116.dp))
@@ -68,17 +69,15 @@ fun LoginScreenContent(
             item {
                 Column {
                     Text(
-                        modifier = Modifier.padding(bottom = 10.dp),
                         text = uiState.step.topTitle.asString(context),
                         style = MaterialTheme.typography.titleMedium
                     )
 
-                    Box(
-                        modifier = Modifier
-                            .padding(bottom = 10.dp)
-                            .height(54.dp)
-                    ) {
+                    Spacer(modifier = Modifier.height(10.dp))
 
+                    Box(
+                        modifier = Modifier.height(54.dp)
+                    ) {
                         if (uiState.step.topMessage !is UiText.Empty) {
                             Text(
                                 text = uiState.step.topMessage.asString(context),
@@ -87,12 +86,15 @@ fun LoginScreenContent(
                             )
                         }
                     }
+
+                    Spacer(modifier = Modifier.height(10.dp))
                 }
             }
 
             item {
+                val emailUi = emailFieldUi(uiState)
+
                 Column {
-                    val emailUi = emailFieldUi(uiState)
                     AuthUnderlineTextField(
                         label = stringResource(id = R.string.login_text_field_email_label),
                         hint = stringResource(id = R.string.login_text_field_email_hint),
@@ -105,7 +107,7 @@ fun LoginScreenContent(
                             imeAction = ImeAction.Done
                         ),
                         keyboardActions = KeyboardActions(
-                            onDone = { onEventSent(LoginContract.Event.OnClickBottom) }
+                            onDone = { onClickBottom() }
                         )
                     )
 
@@ -123,7 +125,7 @@ fun LoginScreenContent(
                                 imeAction = ImeAction.Done
                             ),
                             keyboardActions = KeyboardActions(
-                                onDone = { onEventSent(LoginContract.Event.OnClickBottom) }
+                                onDone = { onClickBottom() }
                             )
                         )
 
@@ -155,7 +157,7 @@ fun LoginScreenContent(
                 modifier = Modifier.fillMaxSize(),
                 enabled = bottomEnabled,
                 loading = isLoading,
-                onClick = { onEventSent(LoginContract.Event.OnClickBottom) },
+                onClick = { onClickBottom() },
                 text = uiState.step.bottomButton.asString(context),
                 textStyle = MaterialTheme.typography.bodyMedium
             )

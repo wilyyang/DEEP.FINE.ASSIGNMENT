@@ -41,10 +41,8 @@ class LoginContract {
 
     data class State(
         val step: Step = Step.Start,
-
         val email: String = "",
         val password: String = "",
-
         val emailValidity: EmailValidity = EmailValidity.Unknown
     ) : ViewState
 

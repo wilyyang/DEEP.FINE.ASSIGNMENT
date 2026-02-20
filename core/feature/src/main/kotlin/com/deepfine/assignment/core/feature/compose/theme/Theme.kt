@@ -15,6 +15,9 @@ private val LightColorScheme = lightColorScheme(
     // 텍스트 필드 힌트 텍스트 기본색
     onSurfaceVariant = ColorSet.gray_999999,
 
+    background = ColorSet.white_ffffff,
+    onBackground = ColorSet.black_000000,
+
     outline = ColorSet.gray_dddddd,
     error = ColorSet.red_ff5252,
 )
